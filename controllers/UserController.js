@@ -1,5 +1,6 @@
 const knex = require("../database/connection");
 var User = require("../models/User");
+const passwordToken = require("../models/passwordToken");
 
 class UserController {
     async index(req, res) {
@@ -73,6 +74,20 @@ class UserController {
             res.send(result.err);
         }
     }
+    async recoverPassword(req, res) {
+        var email = req.body.email;
+        var result = await passwordToken.create(email);
+
+        if (result.status) {
+            res.status(200);
+            res.send(result.token.toString());
+        } else {
+            res.status(404);
+            res.send(result.err);
+        }
+
+    }
+
 }
 
 
