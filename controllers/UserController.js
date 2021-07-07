@@ -4,7 +4,7 @@ var passwordToken = require("../models/passwordToken");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 
-var secret = "123";
+var secret = "asdadasasdasdadasd";
 
 class UserController {
     async index(req, res) {
