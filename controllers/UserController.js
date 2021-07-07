@@ -1,6 +1,10 @@
-const knex = require("../database/connection");
+var knex = require("../database/connection");
 var User = require("../models/User");
-const passwordToken = require("../models/passwordToken");
+var passwordToken = require("../models/passwordToken");
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcrypt");
+
+var secret = "123";
 
 class UserController {
     async index(req, res) {
@@ -104,6 +108,27 @@ class UserController {
             res.send("Token invalido");
         }
 
+    }
+    async login(req, res) {
+        var { email, password } = req.body;
+
+        var user = await User.findByEmail(email);
+
+        if (user != undefined) {
+            var resultado = await bcrypt.compare(password, user.password);
+            if (resultado) {
+
+                var token = jwt.sign({ email: user.email, role: user.role }, secret);
+                res.status(200);
+                res.json({ token: token });
+
+            } else {
+                res.status(406);
+                res.send("Senha invalida");
+            }
+        } else {
+            res.json({ status: false });
+        }
     }
 
 }
