@@ -87,6 +87,24 @@ class UserController {
         }
 
     }
+    async changePassword(req, res) {
+        var token = req.body.token;
+        var password = req.body.password;
+
+        var istokenValid = await passwordToken.validate(token);
+
+        if (istokenValid.status) {
+
+            User.changePassword(password, istokenValid.token.user_id, istokenValid.token.token);
+            res.status(200);
+            res.send("Senha alterado");
+
+        } else {
+            res.status(406);
+            res.send("Token invalido");
+        }
+
+    }
 
 }
 

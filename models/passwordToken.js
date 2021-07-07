@@ -24,6 +24,32 @@ class passwordToken {
             return { status: false, err: "O email passado não existe no banco de dados!" }
         }
     }
+
+    async validate(token) {
+        try {
+            var result = await knex.select().select().where({ token: token }).table("passwordtoken");
+
+            if (result.length > 0) {
+                var tk = result[0];
+                if (tk.used) {
+                    return { status: false };
+                } else {
+                    return { status: true, token: tk };
+                }
+            } else {
+                return { status: false };
+            }
+
+        } catch (error) {
+            console.log(error);
+            return { status: false };
+        }
+    }
+
+    async setUsed(token) {
+        await knex.update({ used: 1 }).where({ token: token }).table("passwordtoken");
+    }
+
 }
 
 
