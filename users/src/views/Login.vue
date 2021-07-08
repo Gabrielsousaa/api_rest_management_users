@@ -14,7 +14,7 @@
                 <p>Email:</p>
                 <input type="text" placeholder= "Email" v-model="email" class="input">
                 <p>Senha:</p>
-                <input type="text" placeholder= "*******" v-model="password" class="input">
+                <input type="password" placeholder= "*******" v-model="password" class="input">
                 <hr>
                 <button class= "button is-success" @click="login">Logar</button>
                 </div>
