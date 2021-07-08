@@ -28,9 +28,9 @@ class UserController {
     async create(req, res) { // cadastro de usuario
         var { email, name, password } = req.body;
 
-        if (email == undefined) {
+        if (email == undefined || email == '' || email == ' ') {
             res.status(400);
-            res.json({ err: "o email é invalido! " })
+            res.json({ err: "o email é invalido! " });
             return; // encerra a requisição para mostrar o erro
         }
         var emailExists = await User.findEmail(email);

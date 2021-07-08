@@ -5,6 +5,13 @@
         <div class="columns is-centered">
             <div class="columns is-1">
                 <div class="column">
+                    <div v-if="error !=undefined">
+                        <div class="notification is-danger">
+                               {{error}} 
+                               
+                        </div> 
+                        <hr>     
+                    </div>
                 <p>Nome:</p>
                 <input type="text" placeholder= "Nome do usuário" v-model="name" class="input">
                 <p>Email:</p>
@@ -19,24 +26,36 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
     export default{
         data() {
             return {
                 name:'',
                 email:'',
-                password:''
+                password:'',
+                error: undefined
             }
         },
         methods: { //json de metodos 
             register(){
-            console.log(this.name);
-            console.log(this.email);
-            console.log(this.password);
-        }
-        }
+            axios.post("http://localhost:8686/user",{
+                name: this.name,
+                email: this.email,
+                password: this.password
+            
+            }).then(res => {
+            console.log(res);
+            this.$router.push({name:"Home"});
+            
+            }).catch(err => {
+            var msgErro = err.response.data.err;
+            this.error = msgErro; 
+           
 
-        
+             })
+         }
     }
+}
 
 </script>
 
