@@ -18,10 +18,30 @@
         <td>{{user.email}}</td> 
         <td>{{user.role | processRole}}</td>
         
-        <td><button class="button is-warning">Editar</button><button class="button is-danger">Deletar</button></td>
+        <td><button class="button is-warning">Editar</button>   <button class="button is-danger" @click="showModalUser(user.id)">Deletar</button></td>
     </tr>
   </tbody>
 </table>
+
+<div :class="{modal: true, 'is-active': showModal}">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+  <div class="card">
+  <div class="card-content">
+    <div class="content">
+      <p>Se você deletar o usuário ele será removido da base de dados e perderá todos os dados tem certeza?</p>
+    </div>
+  </div>
+  <footer class="card-footer">
+    <a href="#" class="card-footer-item" @click="hideModal()">Cancelar</a>
+    <a href="#" class="card-footer-item" >Delete</a>
+  </footer>
+</div>
+  
+    
+  </div>
+  <button class="modal-close is-large" aria-label="close" @click="hideModal()"></button>
+</div>
 
 </div>
 </template>
@@ -45,8 +65,19 @@ export default {
     },
     data() {
         return{
-            users: []
+            users: [],
+            showModal: false
         }
+    },
+    methods: {
+      hideModal(){
+        this.showModal = false;
+      },
+      showModalUser(id) {
+        console.log("id do usuario" + id);
+        this.showModal = true;
+      }
+    
     },
         filters: {
             processRole: function(value){
