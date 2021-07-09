@@ -34,7 +34,7 @@
   </div>
   <footer class="card-footer">
     <a href="#" class="card-footer-item" @click="hideModal()">Cancelar</a>
-    <a href="#" class="card-footer-item" >Delete</a>
+    <a href="#" class="card-footer-item" @click="deleteUser()">Delete</a>
   </footer>
 </div>
   
@@ -66,7 +66,8 @@ export default {
     data() {
         return{
             users: [],
-            showModal: false
+            showModal: false,
+            deleteUserId: -1
         }
     },
     methods: {
@@ -75,7 +76,30 @@ export default {
       },
       showModalUser(id) {
         console.log("id do usuario" + id);
+        this.deleteUserId = id;
         this.showModal = true;
+      },
+      deleteUser(){
+            var req = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        }
+
+        axios.delete("http://localhost:8686/user/" + this.deleteUserId, req).then(res =>{
+          console.log(res);
+           this.showModal = false;
+             axios.get("http://localhost:8686/user",req).then(res => {
+                console.log(res);
+                  this.users = res.data;
+        }).catch(err =>{
+            console.log(err);
+        })
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        }).catch(err =>{
+          console.log(err);
+          this.showModal = false;
+        })
       }
     
     },
