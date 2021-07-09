@@ -6,11 +6,7 @@ class User {
     async findAll() { //select all
         try {
             var result = await knex.select(["id", "email", "name", "role"]).table("users");
-            if (result.length > 0) {
-                return result[0];
-            } else {
-                return undefined;
-            }
+            return result;
         } catch (err) {
             console.log(err);
             return [];

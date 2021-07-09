@@ -15,9 +15,9 @@
                 <p>Nome:</p>
                 <input type="text" placeholder= "Nome do usuário" v-model="name" class="input">
                 <p>Email:</p>
-                <input type="text" placeholder= "Email" v-model="email" class="input">
+                <input type="email" placeholder= "Email" v-model="email" class="input">
                 <p>Senha:</p>
-                <input type="text" placeholder= "*******" v-model="password" class="input">
+                <input type="password" placeholder= "*******" v-model="password" class="input">
                 <hr>
                 <button class= "button is-success" @click="register">Cadastrar</button>
                 </div>
@@ -53,7 +53,8 @@ import axios from 'axios';
            
 
              })
-         }
+         },
+
     }
 }
 
