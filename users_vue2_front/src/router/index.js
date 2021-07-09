@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/RegisterUser.vue'
 import Users from '../views/Users.vue'
 import axios from 'axios';
+import EditUser from '../views/EditUser.vue';
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,12 @@ const routes = [{
         beforeEnter: AdminAuth
     },
     {
+        path: '/admin/users/edit/:id',
+        name: ' UsersEdit',
+        component: EditUser,
+        beforeEnter: AdminAuth
+    },
+    {
         path: '/login',
         name: 'Login',
         component: Login
@@ -61,6 +68,7 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue')
     }
+
 ]
 
 
